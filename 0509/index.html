@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<ul id="list">
+
+</ul>
+
+<script type="text/javascript">
+    $(    function (){
+        console.log("hi");
+        CollAPI();
+    });
+
+   // var url= "https://cors-anywhere.herokuapp.com/"+"https://www.travel.taipei/open-api/zh-tw/Attractions/All?categoryIds=12&page=1";
+
+    var url="https://www.travel.taipei/open-api/zh-tw/Attractions/All?categoryIds=12&page=1";
+    function CollAPI(){
+        $.ajax({
+            type: "get",
+            url: url,
+            //data:data,
+            //contentType:"application/json",//contentType for data
+
+            headers: {
+                accept: "application/json; charset=utf-8"
+            },
+
+            //Type:Function(Anything data, String textStatus, jgXHR jgXHR)
+            success: function (data, textStatus, jgXHR){
+                console.log(JSON.stringify(data));
+                for(var i =0;i<data.total;i++) {
+                    console.log(data.data[i].name);
+                    $("#list").append("<li>"+data.data[i].name+"</li>")
+                }
+
+
+            },
+            //Type: Function(jqXHR jqXHR, String textStatus, String errorThrown)
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.status);  //HTTP CODE
+                console.log(JSON.stringify(jqXHR));
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
